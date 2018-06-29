@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.trying.developing.unsplashapp.adapter.PhotosAdapter;
 import com.trying.developing.unsplashapp.model.Photo;
+import com.trying.developing.unsplashapp.model.RootObject;
 import com.trying.developing.unsplashapp.rest.APIService;
 import com.trying.developing.unsplashapp.rest.APIUrl;
 
@@ -31,11 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     PhotosAdapter photosAdapter;
-    List<Photo> data;
+    List<RootObject> data;
     APIService apiService;
-    Gson gson;
-    String Photos="";
-    Photo photo;
+
 
 
 
@@ -47,10 +46,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         recyclerView = (RecyclerView) findViewById(R.id.RecyclerViewTest_id);
-        gson = new Gson();
         apiService = APIUrl.getService();
 
-//
+
 //        if (savedInstanceState != null) {
 //            Photos = savedInstanceState.getString("photos");
 //            Type type = new TypeToken<List<Photo>>() {
@@ -69,15 +67,15 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
             RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, getSpan());
-        recyclerView.setLayoutManager(layoutManager);
-         recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
 
-        Call<List<Photo>>call=apiService.getphoto();
-        call.enqueue(new Callback<List<Photo>>() {
+        Call<List<RootObject>>call=apiService.getphoto();
+        call.enqueue(new Callback<List<RootObject>>() {
             @Override
-            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+            public void onResponse(Call<List<RootObject>> call, Response<List<RootObject>> response) {
 
                 data=response.body();
                 Log.d("ssss",data.toString());
@@ -88,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Photo>> call, Throwable t) {
+            public void onFailure(Call<List<RootObject>> call, Throwable t) {
 
             }
 
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 //    public void getPhoto(){
 //        apiService.getphoto().enqueue(new Callback<List<Photo>>() {
 //            @Override
-//            public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+//            public void onResponse(Call<List<Photo>> call, RootObject<List<Photo>> response) {
 //
 //                if(response.isSuccessful()){
 //

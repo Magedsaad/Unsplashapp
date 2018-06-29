@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 import com.trying.developing.unsplashapp.R;
-import com.trying.developing.unsplashapp.model.Photo;
+import com.trying.developing.unsplashapp.model.RootObject;
 
 import java.util.List;
 
@@ -19,27 +19,26 @@ import java.util.List;
 
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoHolders>{
     private Context mContext;
-    private List<Photo> list;
+    private List<RootObject> list;
 
-    public PhotosAdapter(Context mContext, List<Photo> list) {
+    public PhotosAdapter(Context mContext, List<RootObject> list) {
         this.mContext = mContext;
         this.list = list;
     }
 
     @Override
     public PhotoHolders onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.photos_items,parent,false);
-        PhotoHolders photoHolders=new PhotoHolders(view);
-
-        return photoHolders;
+        return new PhotoHolders(LayoutInflater.from(parent.getContext()).inflate(R.layout.photos_items,parent,false));
     }
 
     @Override
     public void onBindViewHolder(PhotoHolders holder, int position) {
 
-        final Photo image=list.get(position);
+//        final Photo image=list.get(position);
+//
+//        Picasso.with(mContext).load(image.getRaw()).into(holder.photos);
 
-        Picasso.with(mContext).load(image.getRaw()).into(holder.photos);
+        holder.bind(holder.getAdapterPosition());
 
     }
 
@@ -55,6 +54,12 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoHolde
         public PhotoHolders(View itemView) {
             super(itemView);
             photos=(ImageView) itemView.findViewById(R.id.phototest_id);
+        }
+
+
+        void bind(int position){
+            final RootObject image=list.get(position);
+            Picasso.with(mContext).load(image.getUrl().getRegular()).into(photos);
         }
     }
 }
