@@ -2,6 +2,7 @@ package com.trying.developing.unsplashapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +35,6 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoHolde
     @Override
     public void onBindViewHolder(PhotoHolders holder, int position) {
 
-//        final Photo image=list.get(position);
-//
-//        Picasso.with(mContext).load(image.getRaw()).into(holder.photos);
-
         holder.bind(holder.getAdapterPosition());
 
     }
@@ -51,6 +48,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoHolde
 
         ImageView photos;
 
+
         public PhotoHolders(View itemView) {
             super(itemView);
             photos=(ImageView) itemView.findViewById(R.id.phototest_id);
@@ -59,7 +57,8 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.PhotoHolde
 
         void bind(int position){
             final RootObject image=list.get(position);
-            Picasso.with(mContext).load(image.getUrl().getRegular()).into(photos);
+            Picasso.with(itemView.getContext()).load(image.getUrl().getRegular()).fit().into(photos);
+            Log.i("haaaablllll", image.getUrl().getRegular());
         }
     }
 }

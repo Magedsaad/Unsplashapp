@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity {
     List<RootObject> data;
     APIService apiService;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,37 +44,18 @@ public class MainActivity extends AppCompatActivity {
         apiService = APIUrl.getService();
 
 
-//        if (savedInstanceState != null) {
-//            Photos = savedInstanceState.getString("photos");
-//            Type type = new TypeToken<List<Photo>>() {
-//            }.getType();
-//            data = gson.fromJson(Photos, type);
-//            photosAdapter = new PhotosAdapter(MainActivity.this, data);
-//            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, getSpan());
-//            recyclerView.setLayoutManager(layoutManager);
-//            recyclerView.setItemAnimator(new DefaultItemAnimator());
-//            recyclerView.setAdapter(photosAdapter);
-//
-//
-//        } else {
-//            getPhoto();
-//
-//        }
-
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, getSpan());
-            recyclerView.setLayoutManager(layoutManager);
-            recyclerView.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 4);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
 
-
-        Call<List<RootObject>>call=apiService.getphoto();
+        Call<List<RootObject>> call = apiService.getphoto();
         call.enqueue(new Callback<List<RootObject>>() {
             @Override
             public void onResponse(Call<List<RootObject>> call, Response<List<RootObject>> response) {
 
-                data=response.body();
-                Log.d("ssss",data.toString());
-                photosAdapter=new PhotosAdapter(MainActivity.this,data);
+                data = response.body();
+                photosAdapter = new PhotosAdapter(MainActivity.this, data);
                 recyclerView.setAdapter(photosAdapter);
 
 
@@ -91,68 +67,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-
-    });
+        });
 
     }
 
-
-
-
-    private int getSpan() {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return 2;
-        }
-        return 1;
-    }
 }
-//
-//
-//    public void getPhoto(){
-//        apiService.getphoto().enqueue(new Callback<List<Photo>>() {
-//            @Override
-//            public void onResponse(Call<List<Photo>> call, RootObject<List<Photo>> response) {
-//
-//                if(response.isSuccessful()){
-//
-//                    data=response.body();
-//
-//                    Photos=gson.toJson(data);
-//                    SharedPreferences sharedPreferences=MainActivity.this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor=sharedPreferences.edit();
-//                    editor.putString("photos",Photos);
-//                    editor.apply();
-//                    photosAdapter=new PhotosAdapter(MainActivity.this,data);
-//                    RecyclerView.LayoutManager layoutManager=new GridLayoutManager(MainActivity.this,getSpan());
-//                    recyclerView.setLayoutManager(layoutManager);
-//                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-//                    recyclerView.setAdapter(photosAdapter);
-//
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Photo>> call, Throwable t) {
-//
-//                Toast.makeText(MainActivity.this,"there's no internet connection",Toast.LENGTH_LONG).show();
-//                SharedPreferences sharedPreferences=MainActivity.this.getSharedPreferences("sharedPreferences", Context.MODE_PRIVATE);
-//                Photos=sharedPreferences.getString("photos","");
-//                Type type=new TypeToken<List<Photo>>(){
-//                }.getType();
-//                data=gson.fromJson(Photos,type);
-//                photosAdapter=new PhotosAdapter(MainActivity.this,data);
-//                RecyclerView.LayoutManager layoutManager=new GridLayoutManager(MainActivity.this,getSpan());
-//                recyclerView.setLayoutManager(layoutManager);
-//                recyclerView.setItemAnimator(new DefaultItemAnimator());
-//                recyclerView.setAdapter(photosAdapter);
-//
-//
-//            }
-//        });
-//
-//    }
 
 
 
